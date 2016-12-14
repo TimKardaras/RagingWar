@@ -36,9 +36,8 @@ void ATankPlayerController::AimTowardsCrosshair() {
 
 	FVector HitLocation; // OUT parameter
 	if (GetSightRayHitLocation(HitLocation)) { // is going to line trace
-		UE_LOG(LogTemp, Warning, TEXT("Hit location: %s"), *HitLocation.ToString());
-
 		//tell controlled tank to aim at this point
+		GetControlledTank()->AimAt(HitLocation);
 	}
 }
 bool ATankPlayerController::GetSightRayHitLocation(FVector &HitLocation) const {
@@ -51,7 +50,6 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &HitLocation) const {
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection)) {
 		GetLookVectorHitLocation(LookDirection, HitLocation);
-		/*UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *HitLocation.ToString());*/
 	}
 	//de-project the screen position of the crosshair to a world direction
 	//line-trace along that look direction and see what we hit up to a maximum range
@@ -59,6 +57,12 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &HitLocation) const {
 }
 
 bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const {
+
+	//const FName TraceTag("TraceTag");
+	//GetWorld()->DebugDrawTraceTag = TraceTag;
+	FCollisionQueryParams CollisionParams;
+	CollisionParams.AddIgnoredActor(GetControlledPawn());
+	//CollisionParams.TraceTag = TraceTag;
 	FHitResult HitResult;
 	auto StartLocation = PlayerCameraManager->GetCameraLocation();
 	auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
@@ -66,7 +70,8 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 		HitResult,
 		StartLocation,
 		EndLocation,
-		ECollisionChannel::ECC_Visibility)
+		ECollisionChannel::ECC_Visibility,
+		CollisionParams)
 		) 
 	
 		{
