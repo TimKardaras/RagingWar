@@ -5,18 +5,15 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankBarrel.generated.h"
 
-/**
- * 
- */
-//UCLASS()
+//New tank Barrel static mesh created for tank to allow code 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent), hidecategories = ("Collision"))
 class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
 {
 	GENERATED_BODY()
 	
 public:
-	//does nothing at the moment
-	void Elevate(float DegreesPerSecond);
+	//-1 max downward speed, +1 is max upward speed
+	void Elevate(float RelativeSpeed);
 
 private:
 	UPROPERTY(EditAnywhere, Category = BarrelElevation)
