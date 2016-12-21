@@ -11,7 +11,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	bWantsBeginPlay = true;
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = true; // TODO should this really tick?
 
 	// ...
 }
@@ -36,6 +36,9 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 		StartLocation, //startlocation
 		HitLocation, //endlocation
 		LaunchSpeed, //speed of projectile
+		false,
+		0,
+		0,
 		ESuggestProjVelocityTraceOption::DoNotTrace); //don't trace
 		if(bHaveAimSolution)
 	{
@@ -61,6 +64,6 @@ void UTankAimingComponent::MoveBarrel(FVector AimDirection) {
 	//the difference of rotation between the aim of the player and the location of the barrel
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 	//giving the Elevate function a value of 5
-	Barrel->Elevate(5);
+	Barrel->Elevate(DeltaRotator.Pitch); //this is where relative speed is set to 1
 
 }

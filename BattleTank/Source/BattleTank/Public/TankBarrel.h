@@ -17,7 +17,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, Category = BarrelElevation)
-	float MaxDegreesPerSecond = 20; //sensible default
+	float MaxDegreesPerSecond = 5; //set to 5 after testing
 
 	UPROPERTY(EditAnywhere, Category = BarrelElevation)
 	float MaxElevationDegrees = 40; // the maximum elevation of the barrel is 40 degrees above the current angle
