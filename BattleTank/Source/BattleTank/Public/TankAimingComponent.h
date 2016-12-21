@@ -7,6 +7,7 @@
 
 //cpp files need the include h files but h files just need a forward declaration like so 
 class UTankBarrel;
+class UTankTurret;
 
 //Holds Barrels Properties and elevate method
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -19,10 +20,16 @@ public:
 
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
+	void SetTurretReference(UTankTurret* TurretToSet);
+
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 private:
 	//initialize the barrel to null
 	UTankBarrel* Barrel = nullptr;
+
+	UTankTurret* Turret = nullptr;
 	
 	void MoveBarrel(FVector AimDirection);
+
+	void MoveTurret(FVector AimDirection);
 };

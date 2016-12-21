@@ -2,6 +2,7 @@
 
 #include "BattleTank.h"
 #include "TankBarrel.h" //cpp files need the h files but h files just need a forward declaration
+#include "TankTurret.h"
 #include "TankAimingComponent.h"
 
 
@@ -11,19 +12,35 @@ UTankAimingComponent::UTankAimingComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	bWantsBeginPlay = true;
-	PrimaryComponentTick.bCanEverTick = true; // TODO should this really tick?
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet) {
 	//Barrel is initialized to barreltoset to set the barrels location?
+
+	if (!BarrelToSet) {
+		return;
+	}
 	Barrel = BarrelToSet;
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet) {
+
+	if (!TurretToSet) {
+		return;
+	}
+	Turret = TurretToSet;
+
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	//UE_LOG(LogTemp, Warning, TEXT("Firing at %f"), LaunchSpeed);
 	if (!Barrel) {
+		return;
+	}
+	if (!Turret) {
 		return;
 	}
 
@@ -46,6 +63,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		//sets the barrel according to the returned value from getsafenormal
 			MoveBarrel(AimDirection);
+			MoveTurret(AimDirection);
 			auto Time = GetWorld()->GetTimeSeconds();
 			UE_LOG(LogTemp, Warning, TEXT("Aim Solution found at %f"), Time);
 	}
@@ -67,3 +85,16 @@ void UTankAimingComponent::MoveBarrel(FVector AimDirection) {
 	Barrel->Elevate(DeltaRotator.Pitch); //this is where relative speed is set to 1
 
 }
+
+void UTankAimingComponent::MoveTurret(FVector AimDirection) {
+	//work out difference between current turret rotation and aim direction
+	//where the turret is facing
+	auto TurretRotator = Turret->GetForwardVector().Rotation();
+	//where the player is aiming
+	auto AimAsRotator = AimDirection.Rotation();
+	//the difference of rotation between the aim of the player and the location of the barrel
+	auto DeltaRotator = AimAsRotator - TurretRotator;
+	//giving the Elevate function a value of 5
+	Turret->Azimuth(DeltaRotator.Yaw);
+}
+
