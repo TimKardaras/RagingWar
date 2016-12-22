@@ -21,8 +21,12 @@ public:
 	UFUNCTION(BluePrintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
+	UFUNCTION(BluePrintCallable, Category = Firing)
+	void Fire();
+
 	UFUNCTION(BluePrintCallable, Category = Setup)
-		void SetTurretReference(UTankTurret* TurretToSet);
+	void SetTurretReference(UTankTurret* TurretToSet);
+
 private:
 	// Sets default values for this pawn's properties
 	ATank();

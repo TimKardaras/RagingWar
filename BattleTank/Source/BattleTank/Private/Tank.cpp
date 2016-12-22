@@ -31,6 +31,11 @@ void ATank::SetTurretReference(UTankTurret* TurretToSet) {
 
 }
 
+void ATank::Fire() {
+	auto Time = GetWorld()->GetTimeSeconds();
+	UE_LOG(LogTemp, Warning, TEXT("Tank is Firing at %f"), Time);
+}
+
 // Called to bind functionality to input
 void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
