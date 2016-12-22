@@ -31,7 +31,7 @@ private:
 	float CrosshairXLocation = 0.5f;
 
 	UPROPERTY(EditAnywhere)
-	float CrosshairYLocation = 0.22f;
+	float CrosshairYLocation = 0.2f;
 
 	UPROPERTY(EditAnywhere)
 		float LineTraceRange = 1000000;
