@@ -17,6 +17,6 @@ public:
 	void Azimuth(float RelativeSpeed);
 
 private:
-	UPROPERTY(EditAnywhere, Category = BarrelAzimuth)
+	UPROPERTY(EditDefaultsOnly, Category = BarrelAzimuth)
 		float MaxDegreesPerSecond = 25; //set to 5 after testing
 };
