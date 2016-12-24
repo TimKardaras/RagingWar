@@ -9,6 +9,7 @@ class UTankBarrel;
 class UTankTurret;
 class UTankTrack;
 class UTankAimingComponent;
+class UTankMovementComponent;
 class AProjectile;
 
 UCLASS()
@@ -17,6 +18,10 @@ class BATTLETANK_API ATank : public APawn
 	GENERATED_BODY()
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	//making it a uproperty allows us to use it in blueprint
+	UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent* TankMovementComponent = nullptr;
 public:
 	void AimAt(FVector HitLocation);
 
@@ -25,10 +30,6 @@ public:
 
 	UFUNCTION(BluePrintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret* TurretToSet);
-
-
-	/*UFUNCTION(BluePrintCallable, Category = Setup)
-		void SetTrackReference(UTankTrack* TrackToSet);*/
 
 	UFUNCTION(BluePrintCallable, Category = Firing)
 		void Fire();

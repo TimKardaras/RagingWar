@@ -5,6 +5,8 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankTrack.generated.h"
 
+class TankMovementComponent;
+
 /**
  * TankTrack is used to set maximum driving force and to drive the tank
  */
