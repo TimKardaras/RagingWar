@@ -55,8 +55,8 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 		LaunchSpeed, //speed of projectile
 		false,
 		0,
-		0,
-		ESuggestProjVelocityTraceOption::DoNotTrace); //don't trace
+		0
+		,		ESuggestProjVelocityTraceOption::DoNotTrace); //don't trace
 		if(bHaveAimSolution)
 	{
 		//returns a new vector

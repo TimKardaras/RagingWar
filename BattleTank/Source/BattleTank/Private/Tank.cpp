@@ -38,10 +38,6 @@ void ATank::SetTurretReference(UTankTurret* TurretToSet) {
 
 }
 
-//void ATank::SetTrackReference(UTankTrack* TrackToSet) {
-//	TankAimingComponent->SetTrackReference(TrackToSet);
-//
-//}
 void ATank::Fire() {
 
 	bool isReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds;

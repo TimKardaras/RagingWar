@@ -21,8 +21,18 @@ public:
 	UFUNCTION(BluePrintCallable, Category = Input)
 		void IntendMoveBackward(float Throw);
 
+	UFUNCTION(BluePrintCallable, Category = Input)
+	void IntendTurnRight(float Throw);
+
+	UFUNCTION(BluePrintCallable, Category = Input)
+		void IntendTurnLeft(float Throw);
+
 	UFUNCTION(BluePrintCallable, Category = Setup)
 	void Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
+
+	//TODO check best protection
+
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
 private:
 	UTankTrack* LeftTrack = nullptr;
