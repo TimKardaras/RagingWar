@@ -17,10 +17,11 @@ class BATTLETANK_API ATank : public APawn
 {
 	GENERATED_BODY()
 protected:
+	UPROPERTY(BlueprintReadOnly, Category = "State")
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 	//making it a uproperty allows us to use it in blueprint
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "State")
 	UTankMovementComponent* TankMovementComponent = nullptr;
 public:
 	void AimAt(FVector HitLocation);
