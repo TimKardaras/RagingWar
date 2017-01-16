@@ -26,11 +26,6 @@ protected:
 public:
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BluePrintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	UFUNCTION(BluePrintCallable, Category = Setup)
-	void SetTurretReference(UTankTurret* TurretToSet);
 
 	UFUNCTION(BluePrintCallable, Category = Firing)
 		void Fire();
@@ -40,7 +35,7 @@ private:
 	ATank();
 
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	//virtual void BeginPlay() override;
 	
 
 	// Called to bind functionality to input
@@ -55,10 +50,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ReloadTimeInSeconds = 3.0f;
 
-	//local barrel reference for spawning proectile
-	UTankBarrel* Barrel = nullptr;
-
 	double LastFireTime = -3;
 	
+	UTankBarrel* Barrel = nullptr;
 	
 };
