@@ -16,7 +16,7 @@ void ATankAIController::Tick(float DeltaTime) {
 	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	auto ControlledTank = Cast<ATank>(GetPawn());
 	//finds the first player within the world
-	if (PlayerTank) {
+	if (ensure(PlayerTank)) {
 		//move to actor
 		MoveToActor(PlayerTank, AcceptanceRadius);
 		//the controlled tank will aim at the location of the player's tank

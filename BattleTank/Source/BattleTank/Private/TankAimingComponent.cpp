@@ -28,10 +28,10 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	//UE_LOG(LogTemp, Warning, TEXT("Firing at %f"), LaunchSpeed);
-	if (!Barrel) {
+	if (!ensure(Barrel)) {
 		return;
 	}
-	if (!Turret) {
+	if (!ensure(Turret)){
 		return;
 	}
 
@@ -50,6 +50,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 		,		ESuggestProjVelocityTraceOption::DoNotTrace); //don't trace
 		if(bHaveAimSolution)
 	{
+	//	UE_LOG(LogTemp, Warning, TEXT("HOUSTON WE HAVE A SOLUTION!"));
 		//returns a new vector
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		//sets the barrel according to the returned value from getsafenormal
@@ -61,7 +62,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 }
 
 void UTankAimingComponent::MoveBarrel(FVector AimDirection) {
-	if (!Barrel || !Turret) { return; }
+	if (!ensure(Barrel && Turret)) { return; }
 	//work out difference between current barrel rotation and aim direction
 	//where the barrel is facing
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
@@ -75,7 +76,7 @@ void UTankAimingComponent::MoveBarrel(FVector AimDirection) {
 }
 
 void UTankAimingComponent::MoveTurret(FVector AimDirection) {
-	if (!Barrel || !Turret) { return; }
+	if (!ensure(Barrel && Turret)) { return; }
 	//work out difference between current turret rotation and aim direction
 	//where the turret is facing
 	auto TurretRotator = Turret->GetForwardVector().Rotation();
@@ -86,4 +87,8 @@ void UTankAimingComponent::MoveTurret(FVector AimDirection) {
 	//giving the Elevate function a value of 5
 	Turret->Azimuth(DeltaRotator.Yaw);
 }
+
+//void UTankAimingComponent::AimAt(FVector HitLocation) {
+//	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
+//}
 

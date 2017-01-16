@@ -6,10 +6,7 @@
 #include "Tank.generated.h" // no includes below this line
 
 class UTankBarrel;
-class UTankTurret;
-class UTankTrack;
 class UTankAimingComponent;
-class UTankMovementComponent;
 class AProjectile;
 
 UCLASS()
@@ -20,9 +17,6 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
-	//making it a uproperty allows us to use it in blueprint
-	UPROPERTY(BlueprintReadOnly, Category = "State")
-	UTankMovementComponent* TankMovementComponent = nullptr;
 public:
 	void AimAt(FVector HitLocation);
 
@@ -35,7 +29,7 @@ private:
 	ATank();
 
 	// Called when the game starts or when spawned
-	//virtual void BeginPlay() override;
+	virtual void BeginPlay() override;
 	
 
 	// Called to bind functionality to input
@@ -44,8 +38,10 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
 
+
+	//TODO remove once firing is moved to aiming component
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	float LaunchSpeed = 4000; //TODO find sensible value
+	float LaunchSpeed = 4000; 
 	
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ReloadTimeInSeconds = 3.0f;
