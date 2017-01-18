@@ -26,7 +26,7 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
+void UTankAimingComponent::AimAt(FVector HitLocation) {
 	//UE_LOG(LogTemp, Warning, TEXT("Firing at %f"), LaunchSpeed);
 	if (!ensure(Barrel)) {
 		return;

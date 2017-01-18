@@ -5,7 +5,6 @@
 #include "TankTrack.h"
 #include "TankTurret.h"
 #include "Projectile.h"
-#include "TankAimingComponent.h"
 #include "Tank.h"
 
 
@@ -23,8 +22,6 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	//finds the utankaimingcomponent
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 
@@ -49,9 +46,3 @@ void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 	Super::SetupPlayerInputComponent(InputComponent);
 
 }
-
-void ATank::AimAt(FVector HitLocation) {
-	if (!TankAimingComponent) { return; }
-	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
-}
-

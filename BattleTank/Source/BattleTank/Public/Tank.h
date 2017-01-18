@@ -6,19 +6,14 @@
 #include "Tank.generated.h" // no includes below this line
 
 class UTankBarrel;
-class UTankAimingComponent;
 class AProjectile;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
 	GENERATED_BODY()
-protected:
-	UPROPERTY(BlueprintReadOnly, Category = "State")
-	UTankAimingComponent* TankAimingComponent = nullptr;
 
 public:
-	void AimAt(FVector HitLocation);
 
 
 	UFUNCTION(BluePrintCallable, Category = Firing)
@@ -39,9 +34,8 @@ private:
 	TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
 
 
-	//TODO remove once firing is moved to aiming component
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	float LaunchSpeed = 4000; 
+		float LaunchSpeed = 4000;
 	
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ReloadTimeInSeconds = 3.0f;
