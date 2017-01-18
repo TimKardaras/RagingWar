@@ -1,4 +1,4 @@
-// copyright Tim Kardaras
+// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -6,9 +6,12 @@
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
+
 class UTankAimingComponent;
+
+class ATank;
 /**
- * responsible for helping the player aim
+ * 
  */
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController

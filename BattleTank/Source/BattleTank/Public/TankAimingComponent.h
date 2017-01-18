@@ -1,3 +1,5 @@
+//TANK AIMING COMPONENT.H
+
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
@@ -21,20 +23,20 @@ class UTankTurret;
 class AProjectile;
 
 //Holds Barrels Properties and elevate method
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
-public:	
+public:
 	// Sets default values for this component's properties
 
 	UFUNCTION(BluePrintCallable, Category = "Firing")
-	void Fire();
+		void Fire();
 
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
+		void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 		EFiringState FiringState = EFiringState::Loading;
@@ -51,7 +53,7 @@ private:
 	UTankBarrel* Barrel = nullptr;
 
 	UTankTurret* Turret = nullptr;
-	
+
 
 	// Called to bind functionality to input
 	/*virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;*/

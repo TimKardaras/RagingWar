@@ -1,3 +1,5 @@
+//TANK Aiming component.cpp
+
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
@@ -46,7 +48,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation) {
 	if (!ensure(Barrel)) {
 		return;
 	}
-	if (!ensure(Turret)){
+	if (!ensure(Turret)) {
 		return;
 	}
 
@@ -62,17 +64,17 @@ void UTankAimingComponent::AimAt(FVector HitLocation) {
 		false,
 		0,
 		0
-		,		ESuggestProjVelocityTraceOption::DoNotTrace); //don't trace
-		if(bHaveAimSolution)
+		, ESuggestProjVelocityTraceOption::DoNotTrace); //don't trace
+	if (bHaveAimSolution)
 	{
-	//	UE_LOG(LogTemp, Warning, TEXT("HOUSTON WE HAVE A SOLUTION!"));
+		//	UE_LOG(LogTemp, Warning, TEXT("HOUSTON WE HAVE A SOLUTION!"));
 		//returns a new vector
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		//sets the barrel according to the returned value from getsafenormal
-			MoveBarrel(AimDirection);
-			MoveTurret(AimDirection);
-			auto Time = GetWorld()->GetTimeSeconds();
-			//UE_LOG(LogTemp, Warning, TEXT("Aim Solution found at %f"), Time);
+		MoveBarrel(AimDirection);
+		MoveTurret(AimDirection);
+		auto Time = GetWorld()->GetTimeSeconds();
+		//UE_LOG(LogTemp, Warning, TEXT("Aim Solution found at %f"), Time);
 	}
 }
 
@@ -106,4 +108,3 @@ void UTankAimingComponent::MoveTurret(FVector AimDirection) {
 //void UTankAimingComponent::AimAt(FVector HitLocation) {
 //	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 //}
-
