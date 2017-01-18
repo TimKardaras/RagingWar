@@ -3,6 +3,7 @@
 #include "BattleTank.h"
 #include "TankBarrel.h" //cpp files need the h files but h files just need a forward declaration
 #include "TankTurret.h"
+#include "Projectile.h"
 #include "TankAimingComponent.h"
 
 
@@ -24,6 +25,20 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
 
+}
+void UTankAimingComponent::Fire() {
+	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
+	bool isReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds;
+	if (isReloaded) {
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("Projectile")),
+			Barrel->GetSocketRotation(FName("Projectile"))
+			);
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = GetWorld()->GetTimeSeconds();
+		//FPlatformTime::Seconds();
+	}
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation) {
