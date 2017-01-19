@@ -48,6 +48,12 @@ private:
 
 	void MoveTurret(FVector AimDirection);
 
+	bool IsBarrelMoving();
+
+	virtual void BeginPlay() override;
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
+	FVector AimDirection;
 	double LastFireTime = -3;
 	//initialize the barrel to null
 	UTankBarrel* Barrel = nullptr;

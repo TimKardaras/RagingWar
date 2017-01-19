@@ -10,10 +10,10 @@
 void ATankPlayerController::BeginPlay() {
 
 	Super::BeginPlay();
-	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	/*auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
+	FoundAimingComponent(AimingComponent);*/
 
-	FoundAimingComponent(AimingComponent);
 }
 
 void ATankPlayerController::Tick(float DeltaTime) {
@@ -24,10 +24,10 @@ void ATankPlayerController::Tick(float DeltaTime) {
 
 
 void ATankPlayerController::AimTowardsCrosshair() {
-	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-	if (!ensure(AimingComponent)) {
+	if (!ensure(GetPawn())) {
 		return;
 	}
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 
 	FVector HitLocation; // OUT parameter
 	if (GetSightRayHitLocation(HitLocation)) { // is going to line trace
@@ -65,8 +65,9 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 		HitResult,
 		StartLocation,
 		EndLocation,
-		ECollisionChannel::ECC_Visibility,
-		CollisionParams)
+		ECollisionChannel::ECC_Visibility
+		,		CollisionParams
+)
 		)
 
 	{
