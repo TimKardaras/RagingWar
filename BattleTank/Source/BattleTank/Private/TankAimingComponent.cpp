@@ -35,6 +35,11 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	}
 }
 
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
+
 void UTankAimingComponent::BeginPlay() {
 
 	//so the first fire is after 3 seconds
@@ -102,7 +107,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation) {
 		 AimDirection = OutLaunchVelocity.GetSafeNormal();
 		//sets the barrel according to the returned value from getsafenormal
 		MoveBarrel(AimDirection);
-		MoveTurret(AimDirection);
+		//MoveTurret(AimDirection);
 		auto Time = GetWorld()->GetTimeSeconds();
 		//UE_LOG(LogTemp, Warning, TEXT("Aim Solution found at %f"), Time);
 	}
@@ -119,18 +124,13 @@ void UTankAimingComponent::MoveBarrel(FVector AimDirection) {
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 	//giving the Elevate function a value of 5
 	Barrel->Elevate(DeltaRotator.Pitch); //this is where relative speed is set to 1
+	if (FMath::Abs(DeltaRotator.Yaw) < 180) {
+		Turret->Azimuth(DeltaRotator.Yaw);
+	}
+	else {
+		Turret->Azimuth(-DeltaRotator.Yaw);
 
-}
-
-void UTankAimingComponent::MoveTurret(FVector AimDirection) {
-	if (!ensure(Barrel && Turret)) { return; }
-	//work out difference between current turret rotation and aim direction
-	//where the turret is facing
-	auto TurretRotator = Turret->GetForwardVector().Rotation();
-	//where the player is aiming
-	auto AimAsRotator = AimDirection.Rotation();
-	//the difference of rotation between the aim of the player and the location of the barrel
-	auto DeltaRotator = AimAsRotator - TurretRotator;
-	//giving the Elevate function a value of 5
+	}
 	Turret->Azimuth(DeltaRotator.Yaw);
+
 }
