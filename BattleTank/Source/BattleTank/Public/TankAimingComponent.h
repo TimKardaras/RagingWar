@@ -5,7 +5,9 @@
 #pragma once
 
 #include "Components/ActorComponent.h"
+#include <string>
 #include "TankAimingComponent.generated.h"
+
 
 //Enum here
 UENUM()
@@ -14,7 +16,8 @@ enum class EFiringState : uint8
 	Locked,
 	Aiming,
 	Loading,
-	Reloaded
+	Reloaded,
+	OutOfAmmo
 };
 
 //cpp files need the include h files but h files just need a forward declaration like so 
@@ -39,7 +42,11 @@ public:
 		void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 	EFiringState GetFiringState() const;
+	UFUNCTION(BluePrintCallable, Category = "Firing")
+	int GetRoundsLeft() const;
 
+	UFUNCTION(BluePrintCallable, Category = "Firing")
+		FString GetCurrentState() const;
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 		EFiringState FiringState = EFiringState::Loading;
@@ -56,6 +63,9 @@ private:
 
 	FVector AimDirection;
 	double LastFireTime = -3;
+	int RoundsLeft = 3;
+	FString CurrentState = "Loaded";
+	//std::string CurrentState = "Loaded";
 	//initialize the barrel to null
 	UTankBarrel* Barrel = nullptr;
 
