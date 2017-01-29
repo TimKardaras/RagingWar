@@ -1,8 +1,7 @@
 #My ignore
 
-BattleTank/Content/StarterContent/Textures
-BattleTank/Content/StarterContent/HDRI
-
+*.VC.db
+BattleTank.VC.VC.opendb
 
 # Visual Studio 2015 user specific files
 .vs/
