@@ -32,24 +32,25 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 	GENERATED_BODY()
 public:
 	// Sets default values for this component's properties
+	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BluePrintCallable, Category = "Firing")
 		void Fire();
-
-	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 	EFiringState GetFiringState() const;
 	UFUNCTION(BluePrintCallable, Category = "Firing")
-	int GetRoundsLeft() const;
+	int32 GetRoundsLeft() const;
 
 	UFUNCTION(BluePrintCallable, Category = "Firing")
 		FString GetCurrentState() const;
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 		EFiringState FiringState = EFiringState::Loading;
+
+
 private:
 	UTankAimingComponent();
 
@@ -62,8 +63,8 @@ private:
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
 	FVector AimDirection;
-	double LastFireTime = -3;
-	int RoundsLeft = 3;
+
+
 	FString CurrentState = "Loaded";
 	//std::string CurrentState = "Loaded";
 	//initialize the barrel to null
@@ -84,5 +85,11 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float ReloadTimeInSeconds = 3.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		int32 RoundsLeft = 3;
+	
+	double LastFireTime = 0;
+
 
 };

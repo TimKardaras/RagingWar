@@ -47,7 +47,7 @@ EFiringState UTankAimingComponent::GetFiringState() const
 	return FiringState;
 }
 
-int UTankAimingComponent::GetRoundsLeft() const
+int32 UTankAimingComponent::GetRoundsLeft() const
 {
 	return RoundsLeft;
 }
@@ -148,6 +148,5 @@ void UTankAimingComponent::MoveBarrel(FVector AimDirection) {
 		Turret->Azimuth(-DeltaRotator.Yaw);
 
 	}
-	//Turret->Azimuth(DeltaRotator.Yaw);
 
 }
