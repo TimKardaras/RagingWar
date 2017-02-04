@@ -11,16 +11,22 @@ AProjectile::AProjectile()
 	PrimaryActorTick.bCanEverTick = false;
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
 	ProjectileMovement->bAutoActivate = false;
+
 	CollisionMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("Collison Mesh"));
 	SetRootComponent(CollisionMesh);
 	//sets the sensible default of turning on collision for hit events.
 	CollisionMesh->SetNotifyRigidBodyCollision(true);
 	CollisionMesh->SetVisibility(false);
+
 	LaunchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Blast"));
 	LaunchBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+
 	ImpactBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Impact Blast"));
 	ImpactBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	ImpactBlast->bAutoActivate = false;
+
+	ExplosionForce = CreateDefaultSubobject<URadialForceComponent>(FName("Explosion Force"));
+	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 // Called when the game starts or when spawned
@@ -38,6 +44,27 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	LaunchBlast->Deactivate();
 	//ImpactBlast->SetVisibility(true);
 	ImpactBlast->Activate();
+	ExplosionForce->FireImpulse();
+	SetRootComponent(ImpactBlast);
+	CollisionMesh->DestroyComponent();
+
+	//Applyradial damage how it works
+	//this
+	//the damage itself to apply
+	//the origin of this damage the controller responsible for the damage
+	//the damage radius
+	//type of damage. the damage causer
+	UGameplayStatics::ApplyRadialDamage(
+		this,
+		ProjectileDamage,
+		GetActorLocation(),
+		ExplosionForce->Radius,
+		UDamageType::StaticClass(),
+		TArray<AActor*>() //damage all actors
+
+	);
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle,this, &AProjectile::OnTimerExpire,DestroyDelay,false);
 }
 void AProjectile::LaunchProjectile(float Speed) {
 
@@ -46,3 +73,6 @@ void AProjectile::LaunchProjectile(float Speed) {
 	ProjectileMovement->Activate();
 }
 
+void AProjectile::OnTimerExpire() {
+	Destroy();
+}
