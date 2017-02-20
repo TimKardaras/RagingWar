@@ -8,7 +8,6 @@
 
 
 class UTankAimingComponent;
-
 class ATank;
 /**
  * 
@@ -33,6 +32,7 @@ private:
 	bool GetSightRayHitLocation(FVector &HitLocation) const;
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
+
 	UPROPERTY(EditDefaultsOnly)
 	float CrosshairXLocation = 0.5f;
 
@@ -42,7 +42,8 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 		float LineTraceRange = 1000000;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = "1nput")
 	void OnTankDeath();
+
 
 };
