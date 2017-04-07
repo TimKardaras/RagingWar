@@ -3,6 +3,7 @@
 #include "BattleTank.h"
 #include "Animation/AnimInstance.h"
 #include "Projectile.h"
+#include "GunProjectile.h"
 #include "Gun.h"
 
 
@@ -37,6 +38,7 @@ void AGun::Tick( float DeltaTime )
 
 void AGun::OnFire()
 {
+	UE_LOG(LogTemp, Warning, TEXT("YOU CALLED IT WE FIRED!"));
 	// try and fire a projectile
 	if (ProjectileClass != NULL)
 	{

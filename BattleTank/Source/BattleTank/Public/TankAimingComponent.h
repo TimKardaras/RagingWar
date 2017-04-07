@@ -24,6 +24,7 @@ enum class EFiringState : uint8
 class UTankBarrel;
 class UTankTurret;
 class AProjectile;
+class AGunProjectile;
 
 //Holds Barrels Properties and elevate method
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -78,6 +79,11 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 		TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+		TSubclassOf<AGunProjectile> ProjectileBlueprints = nullptr;
+
+	
 
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")

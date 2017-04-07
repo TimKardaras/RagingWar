@@ -5,6 +5,7 @@
 #include "GameFramework/Actor.h"
 #include "Gun.generated.h"
 
+//class AGunProjectile;
 UCLASS()
 class BATTLETANK_API AGun : public AActor
 {
@@ -31,7 +32,10 @@ public:
 
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
-		TSubclassOf<class AProjectile> ProjectileClass;
+		TSubclassOf<class AGunProjectile> ProjectileClass;
+
+	/*UPROPERTY(EditDefaultsOnly, Category = Projectile)
+		TSubclassOf<class AGunProjectile> ProjectileCdlass;*/
 
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)

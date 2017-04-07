@@ -1,6 +1,7 @@
 // Copyright 1998-2016 Epic Games, Inc. All Rights Reserved.
 
 #include "BattleTank.h"
+#include "../Public/Gun.h"
 #include "TP_ThirdPersonCharacter.h"
 
 //////////////////////////////////////////////////////////////////////////
@@ -39,8 +40,20 @@ ATP_ThirdPersonCharacter::ATP_ThirdPersonCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+
+	// Default offset from the character location for projectiles to spawn
+	GunOffset = FVector(100.0f, 30.0f, 10.0f);
 }
 
+
+void ATP_ThirdPersonCharacter::BeginPlay()
+{
+	// Call the base class  
+	Super::BeginPlay();
+	Gun = GetWorld()->SpawnActor<AGun>(GunBlueprint);
+	//Gun->AttachToComponent(Mesh, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint")); //Attach gun mesh component to Skeleton, doing it here because the skelton is not yet created in the constructor
+	InputComponent->BindAction("GunFire", IE_Pressed, Gun, &AGun::OnFire);
+}
 //////////////////////////////////////////////////////////////////////////
 // Input
 
